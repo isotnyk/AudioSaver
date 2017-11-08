@@ -2,15 +2,17 @@
 using CefSharp.WinForms;
 using System;
 using System.Windows.Forms;
+using VkAudio.Logic;
+using VkAudio.Model;
 
 namespace VkAudio
 {
-  public partial class TestForm : Form
+  public partial class MainForm : Form
   {
     private ChromiumWebBrowser _browser;
     private AudioFileController _audioFileController;
 
-    public TestForm()
+    public MainForm()
     {
       InitializeComponent();
       InitializeChromium();
@@ -21,6 +23,8 @@ namespace VkAudio
     {
       var settings = new CefSettings{CachePath = "Cache"};
       Cef.Initialize(settings);
+
+      //TODO: resolve URL dynamically
       _browser = new ChromiumWebBrowser("https://vk.com/audios13087020") {RequestHandler = new VkRequestHandler{OnAudioDataDownoaded = OnAudioDataDownloaded}};
       Controls.Add(_browser);
       _browser.Dock = DockStyle.Fill;
@@ -39,10 +43,7 @@ namespace VkAudio
     private void OnAudioDataDownloaded(long length)
     {
       if (!_audioFileController.HasWaitingItem)
-      {
-        _browser.ExecuteScriptAsync("alert(\"Waiting item is null. Reload the application.\"");
         return;
-      }
 
       _audioFileController.UpdateAudioLength(length);
     }
@@ -51,7 +52,7 @@ namespace VkAudio
     {
       if (_audioFileController.HasWaitingItem)
       {
-        _browser.ExecuteScriptAsync("alert(\"Please wait while the audio will be downloaded\"");
+        _browser.ExecuteScriptAsync("alert('Previous audio file is still downloading. Please wait until the file will be copied to the destination folder and try again.')");
         return;
       }
 
@@ -62,34 +63,7 @@ namespace VkAudio
     private void TestForm_FormClosing(object sender, FormClosingEventArgs e)
     {
       Cef.Shutdown();
+      _audioFileController.Dispose();
     }
-
-    //private async void OnAudioDataLoaded(Stream stream)
-    //{
-    //  await Task.Run(() => Do(stream));
-    //}
-
-    //private void Do(Stream stream)
-    //{
-    //  if (_audioInfoObject == null)
-    //  {
-    //    MessageBox.Show(@"_audio object is null");
-    //    return;
-    //  }
-
-    //  var buffer = new byte[32768];
-    //  using (var fileStream = File.Create(String.Format(@"D:\VkAudio\{0} - {1}.mp3", _audioInfoObject.Author, _audioInfoObject.Name)))
-    //  {
-    //    while (true)
-    //    {
-    //      var read = stream.Read(buffer, 0, buffer.Length);
-    //      if (read <= 0)
-    //        break;
-    //      fileStream.Write(buffer, 0, read);
-    //    }
-    //  }
-
-    //  _audioInfoObject = null;
-    //}
   }
 }

@@ -1,9 +1,9 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using CefSharp;
 using CefSharp.WinForms;
-using System;
 
-namespace VkAudio
+namespace VkAudio.Model
 {
   public class BoundObject
   {

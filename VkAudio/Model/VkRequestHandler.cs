@@ -1,8 +1,8 @@
-﻿using CefSharp;
-using System.IO;
+﻿using System.IO;
 using System.Security.Cryptography.X509Certificates;
+using CefSharp;
 
-namespace VkAudio
+namespace VkAudio.Model
 {
   public class VkRequestHandler : IRequestHandler
   {
@@ -11,7 +11,6 @@ namespace VkAudio
 
     public delegate void AudioDataDownloaded(long length);
     public AudioDataDownloaded OnAudioDataDownoaded { get; set; }
-
 
     public bool OnBeforeBrowse(IWebBrowser browserControl, IBrowser browser, IFrame frame, IRequest request, bool isRedirect)
     {
@@ -35,17 +34,7 @@ namespace VkAudio
 
     public CefReturnValue OnBeforeResourceLoad(IWebBrowser browserControl, IBrowser browser, IFrame frame, IRequest request, IRequestCallback callback)
     {
-      //if (!request.Url.Contains(".mp3?extra"))
-      //{
-      //  callback.Dispose();
-      //  return CefReturnValue.Continue;
-      //}
-
-      //var task = RequestHelper.MakeAsyncRequest(request);
-      //if (OnAudioDataLoaded != null)
-      //   OnAudioDataLoaded(task.Result);
-
-      //callback.Dispose();
+      callback.Dispose();
       return CefReturnValue.Continue;
     }
 

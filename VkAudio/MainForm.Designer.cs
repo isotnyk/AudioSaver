@@ -1,6 +1,6 @@
 ﻿namespace VkAudio
 {
-  partial class TestForm
+  partial class MainForm
   {
     /// <summary>
     /// Required designer variable.
@@ -30,13 +30,13 @@
     {
       this.SuspendLayout();
       // 
-      // TestForm
+      // MainForm
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.ClientSize = new System.Drawing.Size(1475, 640);
-      this.Name = "TestForm";
-      this.Text = "TestForm";
+      this.Name = "MainForm";
+      this.Text = "Audio Saver";
       this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.TestForm_FormClosing);
       this.ResumeLayout(false);
 
